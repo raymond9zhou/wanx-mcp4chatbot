@@ -1,0 +1,24 @@
+{
+  "name": "tongyi-wanx-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP 服务器",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "debug": "npx @modelcontextprotocol/inspector node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "axios": "^1.8.4",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.3.1",
+    "eslint": "^8.42.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.3"
+  }
+}
