@@ -1,6 +1,7 @@
+#!/usr/bin/env node
+
 import {
   McpServer,
-  ResourceTemplate,
 } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
@@ -50,7 +51,6 @@ server.tool(
 async function runServer() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  console.error("Tongyi Wanxiang MCP Server started using stdio");
 }
 runServer().catch((error) => {
   console.error("Fatal error running server:", error);
