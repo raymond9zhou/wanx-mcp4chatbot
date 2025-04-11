@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "./config";
+import config from "./config.js";
 
 // 创建文生图任务
 export const createImageTask = async ({

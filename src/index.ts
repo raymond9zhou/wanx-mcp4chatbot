@@ -4,8 +4,8 @@ import {
 } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { createImageTask, pollTaskUntilDone } from "./imageServer";
-import config from "./config";
+import { createImageTask, pollTaskUntilDone } from "./imageServer.js";
+import config from "./config.js";
 
 // 检查API密钥是否配置
 if (!config.api.apiKey) {
@@ -30,7 +30,7 @@ server.tool(
       negative_prompt,
     });
     return {
-      content: [{ type: "text", text: JSON.stringify(result) }],
+      content: [{ type: "text", text: JSON.stringify(result.output) }],
     };
   }
 );
