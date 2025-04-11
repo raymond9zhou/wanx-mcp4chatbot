@@ -5,7 +5,7 @@ import {
 } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { createImageTask, pollTaskUntilDone } from "./imageServer.js";
+import { createImageTask, pollTaskUntilDone } from "./wanx.js";
 import config from "./config.js";
 
 // 检查API密钥是否配置

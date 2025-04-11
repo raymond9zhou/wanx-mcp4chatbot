@@ -17,10 +17,6 @@
 
 以百炼平台举例
 
-```bash
-npx -y tongyi-wanx-mcp-server --api-key <你的百炼 API 密钥>
-```
-
 ```json
 {
   "mcpServers": {
