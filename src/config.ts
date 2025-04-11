@@ -1,4 +1,4 @@
-const config = {  
+const config = {
   api: {  
     baseUrl: 'https://dashscope.aliyuncs.com/api/v1',  
     apiKey: process.env.DASHSCOPE_API_KEY,  

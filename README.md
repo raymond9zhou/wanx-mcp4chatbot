@@ -1,57 +1,139 @@
 # 通义万相 MCP 服务器
 
-这是一个基于 TypeScript 的 Model Context Protocol (MCP) 服务器示例实现。该服务器提供了计算器工具、问候资源和图像生成提示模板的示例。
+这是一个基于 TypeScript 的 Model Context Protocol (MCP) 服务器，专门提供阿里云通义万相的文生图(Text-to-Image)能力。该服务器通过 MCP 协议，允许大语言模型（LLM）直接调用通义万相的图像生成 API。
 
-## 功能
+## 功能特点
 
-- **计算器工具**: 支持加法、减法、乘法和除法运算
-- **问候资源**: 提供动态问候内容
-- **图像生成提示模板**: 提供图像生成的标准提示模板
+- **文生图能力集成**：接入阿里云通义万相文生图 API，支持高质量的 AI 图像生成
+- **异步任务处理**：支持长时间运行的图像生成任务，通过异步轮询获取最终结果
+- **MCP 协议支持**：符合 Model Context Protocol 规范，可与支持 MCP 的 LLM 无缝协作
 
-## 开发环境要求
+## 环境要求
 
 - Node.js >= 16.x
-- npm >= 8.x
+- npm >= 8.x 或 pnpm
 
-## 安装
+## 如何使用
+
+以百炼平台举例
 
 ```bash
-# 安装依赖
+npx -y tongyi-wanx-mcp-server --api-key <你的百炼 API 密钥>
+```
+
+```json
+{
+  "mcpServers": {
+    "tongyi-wanx-mcp-server": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "tongyi-wanx-mcp-server@latest"
+      ],
+      "env": {
+        "DASHSCOPE_API_KEY": "<你的通义万相 API 密钥>"
+      }
+    }
+  }
+}
+```
+
+## 如何开发
+
+### 安装依赖
+
+```bash
+# 使用 npm
 npm install
+
+# 或使用 pnpm
+pnpm install
 ```
 
-## 开发
-
-```bash
-# 运行开发环境
-npm run dev
-
-# 使用调试工具运行
-npm run debug
-```
-
-## 构建和部署
+### 构建与运行
 
 ```bash
 # 构建项目
 npm run build
+# 或
+pnpm run build
 
-# 运行构建后的项目
+# 运行服务器
 npm start
+# 或
+pnpm start
+
+# 使用调试工具运行
+npm run debug
+# 或
+pnpm run debug
 ```
+
+## API 使用
+
+该服务器提供以下 MCP 工具：
+
+### 1. 文生图生成（wanx-t2i-image-generation）
+
+启动图像生成任务，返回任务 ID。
+
+**参数**：
+- `prompt`: 图像生成提示词
+- `negative_prompt`: 负面提示词（不希望在图像中出现的元素）
+
+**返回**：
+- 包含 `task_id` 的任务信息
+
+### 2. 获取生成结果（wanx-t2i-image-generation-result）
+
+通过任务 ID 获取图像生成结果。
+
+**参数**：
+- `task_id`: 由文生图生成工具返回的任务 ID
+
+**返回**：
+- 图像生成结果，包含图像 URL
 
 ## 项目结构
 
 ```
 project/
-├── src/              # 源代码目录
-│   └── index.ts      # 主入口文件
-├── dist/             # 编译后的代码目录
-├── package.json      # 项目配置
-├── tsconfig.json     # TypeScript 配置
-└── README.md         # 项目说明
+├── src/                  # 源代码目录
+│   ├── index.ts          # 主入口文件，MCP 服务器定义
+│   ├── imageServer.ts    # 通义万相 API 集成
+│   └── config.ts         # 配置文件
+├── dist/                 # 编译后的代码目录
+├── package.json          # 项目配置
+├── tsconfig.json         # TypeScript 配置
+└── README.md             # 项目说明
 ```
 
-## 注意
+## 通义万相 API 参数说明
 
-由于 MCP SDK 尚未正式发布或在本环境中不可用，此项目使用模拟实现来演示 MCP 的基本概念和架构。在正式环境中，应替换为实际的 MCP SDK 实现。 
+### 文生图 API 支持的参数
+
+- **model**: 模型名称，默认为 `wanx2.1-t2i-turbo`
+- **size**: 图像尺寸，默认为 `1024*1024`
+- **n**: 生成图像数量，默认为 1
+- **seed**: 随机种子，用于复现结果
+- **prompt_extend**: 是否启用提示词扩展，默认为 true
+- **watermark**: 是否添加水印，默认为 false
+
+## 高级配置
+
+您可以在 `src/config.ts` 中修改以下配置：
+
+- **pollingInterval**: 轮询任务状态的间隔时间（毫秒）
+- **maxRetries**: 最大轮询次数
+- **defaultModel**: 默认使用的模型
+
+## 注意事项
+
+1. 请确保您有有效的通义万相 API 访问权限和密钥
+2. 图像生成是一个异步过程，可能需要数秒到数十秒不等
+3. 请合理设置轮询间隔和最大重试次数，以适应您的使用场景
+
+## 参考资料
+
+- [通义万相 API 文档](https://help.aliyun.com/document_detail/2512439.html)
+- [Model Context Protocol (MCP) 规范](https://github.com/llm-protocol/mcp-spec) 
