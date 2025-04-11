@@ -16,7 +16,7 @@ if (!config.api.apiKey) {
 // 创建MCP服务器
 const server = new McpServer({
   name: "tongyi-wanxiang",
-  version: "v2.1",
+  version: "v1.0.3",
 });
 
 // Add an addition tool
@@ -41,11 +41,19 @@ server.tool(
   { task_id: z.string() },
   async ({ task_id }) => {
     const result = await pollTaskUntilDone(task_id);
-    return result;
+    return {
+      content: [{ type: "text", text: JSON.stringify(result.output.results) }],
+    };
   }
 );
 
-// 启动服务器
-const transport = new StdioServerTransport();
-server.connect(transport);
-console.error("Tongyi Wanxiang MCP Server started using stdio");
+async function runServer() {
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  console.error("Tongyi Wanxiang MCP Server started using stdio");
+}
+runServer().catch((error) => {
+  console.error("Fatal error running server:", error);
+  process.exit(1);
+});
+

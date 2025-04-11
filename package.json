@@ -1,17 +1,17 @@
 {
   "name": "tongyi-wanx-mcp-server",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "通义万相 MCP 服务器",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "tongyi-wanx-mcp-server": "./dist/index.js"
+    "tongyi-wanxiang": "./dist/index.js"
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && chmod 755 dist/index.js",
     "start": "node dist/index.js",
     "pub": "npm run build && npm publish --registry=https://registry.npmjs.org",
     "debug": "npx @modelcontextprotocol/inspector node dist/index.js"

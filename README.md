@@ -24,7 +24,7 @@ npx -y tongyi-wanx-mcp-server --api-key <你的百炼 API 密钥>
 ```json
 {
   "mcpServers": {
-    "tongyi-wanx-mcp-server": {
+    "tongyi-wanxiang": {
       "command": "npx",
       "args": [
         "-y",
