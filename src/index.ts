@@ -5,7 +5,8 @@ import {
 } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { createImageTask, pollTaskUntilDone } from "./wanx.js";
+import { createImageTask, pollTaskUntilDone } from "./wanx-t2i.js";
+import { generateVideo, queryVideoTaskStatus } from "./wanx-t2v.js";
 import config from "./config.js";
 
 // 检查API密钥是否配置
@@ -48,10 +49,35 @@ server.tool(
   }
 );
 
+server.tool(
+  "wanx-t2v-video-generation",
+  "使用阿里云万相文生视频大模型的文生视频能力，由于视频生成耗时比较久，需要调用 wanx-t2v-video-generation-result 工具获取结果",
+  { prompt: z.string() },
+  async ({ prompt }) => {
+    const result = await generateVideo(prompt);
+    return {
+      content: [{ type: "text", text: JSON.stringify(result) }],
+    };
+  }
+);
+
+server.tool(
+  "wanx-t2v-video-generation-result",
+  "获取阿里云万相文生视频大模型的文生视频结果",
+  { task_id: z.string() },
+  async ({ task_id }) => {
+    const result = await queryVideoTaskStatus(task_id);
+    return {
+      content: [{ type: "text", text: JSON.stringify(result) }],
+    };
+  }
+);
+
 async function runServer() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
 }
+
 runServer().catch((error) => {
   console.error("Fatal error running server:", error);
   process.exit(1);
