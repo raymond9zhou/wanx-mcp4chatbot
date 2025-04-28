@@ -1,6 +1,6 @@
 {
   "name": "tongyi-wanx-mcp-server",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "通义万相 MCP 服务器",
   "type": "module",
   "main": "dist/index.js",
@@ -21,6 +21,7 @@
     "axios": "^1.8.4",
     "zod": "^3.21.4"
   },
+  "packageManager": "pnpm@10.9.0",
   "devDependencies": {
     "@types/node": "^20.3.1",
     "eslint": "^8.42.0",

@@ -8,7 +8,7 @@ export const createImageTask = async ({
   model = config.api.defaultModel,
   size = "1024*1024",
   n = 1,
-  seed = null,
+  seed = 0,
   prompt_extend = true,
   watermark = false,
 }) => {
@@ -38,14 +38,6 @@ export const createImageTask = async ({
     // 添加可选参数
     if (negative_prompt) {
       requestBody.input.negative_prompt = negative_prompt;
-    }
-
-    if (seed !== null) {
-      requestBody.parameters.seed = seed;
-    }
-
-    if (prompt_extend !== null) {
-      requestBody.parameters.prompt_extend = prompt_extend;
     }
 
     if (watermark !== null) {

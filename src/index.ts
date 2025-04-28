@@ -20,15 +20,15 @@ const server = new McpServer({
   version: "v1.0.3",
 });
 
-// Add an addition tool
 server.tool(
   "wanx-t2i-image-generation",
   "使用阿里云万相文生图大模型的文生图能力，由于图片生成耗时比较久，需要调用 wanx-t2i-image-generation-result 工具获取结果",
-  { prompt: z.string(), negative_prompt: z.string() },
-  async ({ prompt, negative_prompt }) => {
+  { prompt: z.string(), negative_prompt: z.string(), seed: z.number().optional() },
+  async ({ prompt, negative_prompt, seed }) => {
     const result = await createImageTask({
       prompt,
       negative_prompt,
+      seed: seed ?? Math.floor(Math.random() * (4294967291 - 0)),
     });
     return {
       content: [{ type: "text", text: JSON.stringify(result.output) }],
