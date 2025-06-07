@@ -1,4 +1,6 @@
-# 通义万相 MCP 服务器
+# 通义万相 MCP 服务器， 规范返回base64图片
+Forked from [tongyi-wanx-mcp-server](https://github.com/alibaba/tongyi-wanx-mcp-server)
+在原项目基础上更改图片以base64格式返回，使智能助手的ui可以直接显示图片。
 
 这是一个基于 TypeScript 的 Model Context Protocol (MCP) 服务器，专门提供阿里云通义万相的文生图(Text-to-Image)和文生视频(Text-to-Video)能力。该服务器通过 MCP 协议，允许大语言模型（LLM）直接调用通义万相的图像和视频生成 API。
 
@@ -52,23 +54,16 @@ pnpm install
 ```bash
 # 构建项目
 npm run build
-# 或
-pnpm run build
 
 # 运行服务器
 npm start
-# 或
-pnpm start
 
-# 使用调试工具运行
-npm run debug
-# 或
-pnpm run debug
-```
+# 使用MCP 官方inspector测试
+npm run inspector
 
-## API 使用
 
-该服务器提供以下 MCP 工具：
+
+## 提供以下 MCP 工具：
 
 ### 1. 文生图生成（wanx-t2i-image-generation）
 
@@ -89,7 +84,7 @@ pnpm run debug
 - `task_id`: 由文生图生成工具返回的任务 ID
 
 **返回**：
-- 图像生成结果，包含图像 URL
+- 图像生成结果，以base64编码的图片数据
 
 ### 3. 文生视频生成（wanx-t2v-video-generation）
 
